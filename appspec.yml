@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /path/to/your/application
+    destination: /opt/react_django_demo_app
 
 hooks:
   ApplicationStart:
