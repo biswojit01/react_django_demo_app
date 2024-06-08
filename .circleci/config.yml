@@ -1,0 +1,55 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:uiyqoGltMc2xt5xIq+rQx0tWCCduea+hl0NHSbA5Opk"
+      - run:
+          name: Deploy to EC2
+          command: |
+            ssh -o StrictHostKeyChecking=no ubuntu@52.91.253.111 << 'EOF'
+              sudo apt update
+              sudo apt install -y python3-pip python3-dev
+              sudo pip3 install virtualenv
+              if [ ! -d "/home/ubuntu/test" ]; then
+                git clone https://github.com/biswojit01/react_django_demo_app.git /home/ubuntu/test
+              else
+                cd /home/ubuntu/test
+                git pull origin main
+              fi
+              cd /home/ubuntu/test
+              virtualenv venv
+              . venv/bin/activate
+              pip install -r requirements.txt
+              #python manage.py migrate
+              #python manage.py collectstatic --noinput
+              # Start Django development server (or any other server you prefer)
+              # Note: This is just for demonstration; for production use a proper server setup
+              nohup python manage.py runserver 0.0.0.0:8000 &
+            EOF
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
