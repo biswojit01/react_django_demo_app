@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Deploy to EC2
           command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@52.91.253.111 << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@52.91.253.111 \<< 'EOF'
               sudo apt update
               sudo apt install -y python3-pip python3-dev
               sudo pip3 install virtualenv
