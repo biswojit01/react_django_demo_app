@@ -28,13 +28,8 @@ jobs:
               sudo apt update
               sudo apt install -y python3-pip python3-dev
               sudo pip3 install virtualenv
-              if [ ! -d "/home/ubuntu/test" ]; then
-                git clone https://github.com/biswojit01/react_django_demo_app.git /home/ubuntu/test
-              else
-                cd /home/ubuntu/test
-                git pull origin main
-              fi
-              cd /home/ubuntu/test
+              cd /home/ubuntu/test/react_django_demo_app
+              cd /home/ubuntu/test/react_django_demo_app
               virtualenv venv
               . venv/bin/activate
               pip install -r requirements.txt
