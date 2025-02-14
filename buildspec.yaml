@@ -1,18 +1,12 @@
----
 version: 0.2
 phases:
   pre_build:
     commands:
       - echo "Fetching Docker Hub credentials from AWS Secrets Manager..."
-      - export DOCKERHUB_USERNAME=$(aws secretsmanager get-secret-value
-        --secret-id dockerhub-credentials --query 'SecretString' --output text |
-        jq -r .DOCKERHUB_USERNAME)
-      - export DOCKERHUB_PASSWORD=$(aws secretsmanager get-secret-value
-        --secret-id dockerhub-credentials --query 'SecretString' --output text |
-        jq -r .DOCKERHUB_PASSWORD)
+      - export DOCKERHUB_USERNAME=$(aws secretsmanager get-secret-value --secret-id dockerhub-credentials --query 'SecretString' --output text | jq -r .DOCKERHUB_USERNAME)
+      - export DOCKERHUB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id dockerhub-credentials --query 'SecretString' --output text | jq -r .DOCKERHUB_PASSWORD)
       - echo "Logging into Docker Hub..."
-      - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME"
-        --password-stdin
+      - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
       - export IMAGE_NAME="biswojit01/secure:django-V1"
       - echo "Image name: $IMAGE_NAME"
   build:
