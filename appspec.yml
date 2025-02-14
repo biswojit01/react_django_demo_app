@@ -3,10 +3,18 @@ os: linux
 
 files:
   - source: imageDetail.txt
-    destination: /home/ubuntu/deployment/
+    destination: /opt/scripts/
+  - source: deploy.sh
+    destination: /opt/scripts/
+
+permissions:
+  - object: /opt/scripts/deploy.sh
+    pattern: "**"
+    owner: root
+    mode: "0755"
 
 hooks:
   AfterInstall:
-    - location: scripts/deploy.sh
+    - location: artifacts/scripts/deploy.sh
       timeout: 300
-      runas: ubuntu
+      runas: root
