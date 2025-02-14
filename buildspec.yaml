@@ -8,7 +8,7 @@ phases:
       - export DOCKERHUB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id dockerhub-credentials --query 'SecretString' --output text | jq -r .DOCKERHUB_PASSWORD)
       - echo "Logging into Docker Hub..."
       - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-      - export IMAGE_NAME="jhon01/secure:django-V1"
+      - 'export IMAGE_NAME="biswojit01/secure:django-V1"'
       - echo "Image name: $IMAGE_NAME"
 
   build:
@@ -26,4 +26,3 @@ phases:
 artifacts:
   files:
     - imageDetail.txt
-
