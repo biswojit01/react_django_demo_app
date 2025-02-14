@@ -3,7 +3,7 @@
 set -e  # Stop on error
 
 echo "Reading image details..."
-IMAGE=$(cat /home/ubuntu/deployment/imageDetail.txt | cut -d '=' -f2)
+IMAGE=$(cat /opt/scripts/imageDetail.txt | cut -d '=' -f2)
 
 echo "Logging into Docker Hub..."
 export DOCKERHUB_USERNAME=$(aws secretsmanager get-secret-value --secret-id dockerhub-credentials --query 'SecretString' --output text | jq -r .DOCKERHUB_USERNAME)
