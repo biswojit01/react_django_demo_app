@@ -26,3 +26,4 @@ phases:
 artifacts:
   files:
     - imageDetail.txt
+    - appspec.yml
