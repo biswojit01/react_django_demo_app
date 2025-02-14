@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+
+files:
+  - source: imageDetail.txt
+    destination: /home/ubuntu/deployment/
+
+hooks:
+  AfterInstall:
+    - location: scripts/deploy.sh
+      timeout: 300
+      runas: ubuntu
