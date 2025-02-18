@@ -22,4 +22,7 @@ echo "Pulling Docker image: $IMAGE"
 docker pull $IMAGE
 
 echo "Updating Docker Swarm service..."
-docker service update --image $IMAGE django_app || docker service create --name django_app --publish 8000:8000 $IMAGE
+#docker service update --image $IMAGE django_app || docker service create --name django_app --publish 8000:8000 $IMAGE
+
+docker service update --image $IMAGE django_app || \
+docker service create --name django_app --mode global --publish 8000:8000 --constraint 'node.role==worker' $IMAGE
